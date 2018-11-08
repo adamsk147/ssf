@@ -1,0 +1,28 @@
+version: '3'
+services:
+  app:
+    image: adamsk147/mydocker:1
+    ports:
+      - "3000:3000"
+    networks:
+      - backend
+      - frontend
+   
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:4.0.0-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    hostname:
+    networks:
+      - backend
+    volumes:
+      - redis-data:/data
+
+networks:
+  backend:
+  frontend:
+
+volumes:
+  redis-data:
